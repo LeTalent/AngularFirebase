@@ -1,0 +1,182 @@
+<div class="myContent">
+  <!-- <table id="customers">
+    <caption>
+      <h1>Products</h1>
+    </caption>
+    <thead>
+      <th><h2>Id</h2></th>
+      <th><h2>Name</h2></th>
+      <th><h2>Surename</h2></th>
+      <th><h2>Age</h2></th>
+      <th><h2>Bezeichnung</h2></th>
+      <th><h2></h2></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <th>
+          <h2>{{ user.id }}</h2>
+        </th>
+        <td>{{ user.name }}</td>
+        <td>{{ user.surename }}</td>
+        <td>{{ user.age }}</td>
+        <td>{{ user.bezeichnung }}</td>
+        <td><button (click)="delete(user.id)">Delete User</button></td>
+      </tr>
+    </tbody>
+  </table> -->
+
+  <mat-divider style="margin-top: 20px; margin-bottom: 20px"></mat-divider>
+
+  <form [formGroup]="userForm" class="inputForm" (ngSubmit)="onSubmit()">
+    <div class="mat-form-group">
+      <div>
+        <mat-form-field class="example-full-width">
+          <input
+            type="text"
+            matInput
+            formControlName="name"
+            placeholder="name"
+            required
+            [ngClass]="{
+              'is-invalid': submitted && userForm.get('name').errors
+            }"
+          />
+        </mat-form-field>
+        <div
+          *ngIf="submitted && ( !userForm.get('name').dirty || !userForm.get('name').touched ) "
+          class="text-danger"
+        >
+          <span> Name is <strong>required</strong></span>
+      </div>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input
+            type="text"
+            matInput
+            formControlName="surename"
+            placeholder="Surename"
+            required
+          />
+        </mat-form-field>
+        <div
+          *ngIf="submitted && (userForm.get('surename').errors)"
+          class="text-danger"
+        >
+          <div *ngIf="userForm.get('surename').errors"> Surename is <strong>required</strong></div>
+        </div>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input
+            type="number"
+            matInput
+            formControlName="age"
+            placeholder="Age"
+            maxlength="3"
+            minlength="2"
+            required
+          />
+        </mat-form-field>
+        <div
+          *ngIf="submitted && !userForm.get('age').touched && !userForm.get('age').dirty"
+          class="text-danger"
+        >
+          <div> age is <strong>required</strong></div>
+        </div>
+        <div
+          *ngIf="submitted && userForm.get('age').hasError('minlength') && userForm.get('age').hasError('maxlength')"
+          class="text-danger"
+        >
+          <div> age is <strong>length not allow</strong></div>
+        </div>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input
+            type="text"
+            matInput
+            formControlName="bezeichnung"
+            placeholder="what are you ?"
+            required
+          />
+        </mat-form-field>
+        <div
+          *ngIf="submitted && userForm.get('bezeichnung').errors"
+          class="text-danger"
+        >
+          <div *ngIf="userForm.get('bezeichnung').errors"> Bezeichnung is <strong>required</strong></div>
+        </div>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" type="submit" >
+          Create User
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row1" style="margin-top: 25px;">
+  <div
+    fxLayout="row"
+    fxLayout="row wrap"
+    fxLayoutGap="0.5%"
+    fxLayoutAlign="center"
+  >
+    <mat-card class="card" style="width: 18rem;" *ngFor="let user of users">
+      <mat-card-header>
+        <mat-card-title> {{ user.name }}</mat-card-title>
+        <mat-card-subtitle class="card-subtitle mb-2 text-muted">
+          {{ user.surename }} ( {{ user.age }} )
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <!-- <mat-divider
+        style="margin-top: 1px; margin-bottom: 1px; margin-left: auto; margin-right: auto; width: 320px"
+      ></mat-divider> -->
+
+      <mat-card-content
+        ><p>{{ user.bezeichnung }}</p>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz
+          breeds of dog from Japan. A small, agile dog that copes very well with
+          mountainous terrain, the Shiba Inu was originally bred for hunting.
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [routerLink]="['/edit-user']">
+          EDIT
+        </button>
+        <button mat-raised-button color="warn" (click)="delete(user.id)">
+          DELETE
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<mat-divider style="margin-top: 20px; margin-bottom: 20px"></mat-divider>
+
+<!-- <mat-card class="example-card" *ngFor="let user of users">
+  <mat-card-header
+    style="margin-left: auto; margin-right: auto; text-align: center; width: 150px"
+  >
+    <mat-card-title>{{ user.name }}</mat-card-title>
+    <mat-card-subtitle>{{ user.surename }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      The Shiba Inu is the smallest of the six original and distinct spitz
+      breeds of dog from Japan. A small, agile dog that copes very well with
+      mountainous terrain, the Shiba Inu was originally bred for hunting.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary">EDIT</button>
+    <button mat-raised-button color="warn" (click)='delete(user.id)'>DELETE</button>
+  </mat-card-actions>
+</mat-card> -->
+
+
+

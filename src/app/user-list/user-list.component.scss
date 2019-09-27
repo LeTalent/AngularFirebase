@@ -67,3 +67,30 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+// .example-container {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .example-container > * {
+//   width: 100%;
+// }
+.inputForm{
+  margin-left: 50px;
+}
+.example-full-width{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.mat-form-group{
+  display: flex;
+}
+.text-danger{
+  text-align: center;
+  width: 130px;
+  height: 40px;
+  background: pink;
+  border-radius: 10px;
+
+}
