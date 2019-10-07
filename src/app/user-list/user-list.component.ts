@@ -7,6 +7,10 @@ import {
   Validators,
   FormBuilder
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -17,21 +21,56 @@ export class UserListComponent implements OnInit {
   userForm: FormGroup;
   submitted = false;
   users: User[] = [];
+  user: User;
 
- 
-
-  constructor(private userService: UserService, private fb: FormBuilder) {}
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+    public dialog: MatDialog,
+    private dataServ: DataService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userForm = this.fb.group({
-      name: new FormControl('', [Validators.required]),
-      surename: new FormControl('', [Validators.required]),
-      age: new FormControl('', [Validators.required, Validators.maxLength(3), Validators.minLength(2)]),
-      bezeichnung: new FormControl('', [Validators.required])
+      name: new FormControl('', {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      surename: new FormControl('', {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      age: new FormControl('', {
+        updateOn: 'blur',
+        validators: [
+          Validators.required,
+          Validators.maxLength(3),
+          Validators.minLength(2)
+        ]
+      }),
+      bezeichnung: new FormControl('', {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      })
     });
     this.getAllUsers();
   }
+  get name() {
+    return this.userForm.get('name');
+  }
 
+  get sureName() {
+    return this.userForm.get('surename');
+  }
+
+  get age() {
+    return this.userForm.get('age');
+  }
+
+  get bezeichnung() {
+    return this.userForm.get('bezeichnung');
+  }
   // get name() { return this.userForm.get('name'); }
 
   onSubmit() {
@@ -41,7 +80,7 @@ export class UserListComponent implements OnInit {
       return;
     }
     this.create(this.userForm.value);
-    this.userForm.reset();
+    this.userForm.reset('');
   }
 
   public getAllUsers() {
@@ -63,9 +102,24 @@ export class UserListComponent implements OnInit {
     return console.log(this.userService.createUser(user));
   }
 
-  delete(id: string) {
-    console.log('test1');
-    console.log(this.userService.deleteUser(id));
-    console.log('test2');
+  openDialog(id): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: 'Do you really want to delete this Card?'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Yes clicked');
+        // DO SOMETHING
+        this.userService.deleteUser(id);
+      }
+    });
   }
+  editUser() {
+    this.router.navigate(['edit-user']);
+  }
+
+  // delete(id: string) {
+  //   this.userService.deleteUser(id);
+  // }
 }

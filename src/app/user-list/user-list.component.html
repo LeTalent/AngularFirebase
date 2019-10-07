@@ -1,4 +1,4 @@
-<div class="myContent">
+<div class="myContent" fxLayout="row" fxLayout="row wrap" fxLayout.xs="row">
   <!-- <table id="customers">
     <caption>
       <h1>Products</h1>
@@ -27,31 +27,37 @@
 
   <mat-divider style="margin-top: 20px; margin-bottom: 20px"></mat-divider>
 
-  <form [formGroup]="userForm" class="inputForm" (ngSubmit)="onSubmit()">
+  <form
+    [formGroup]="userForm"
+    class="inputForm"
+    (ngSubmit)="onSubmit()"
+    fxLayout="row"
+    fxLayout="row wrap"
+    fxLayout.xs="row"
+  >
     <div class="mat-form-group">
       <div>
         <mat-form-field class="example-full-width">
           <input
+            matInput
             type="text"
             matInput
             formControlName="name"
             placeholder="name"
             required
-            [ngClass]="{
-              'is-invalid': submitted && userForm.get('name').errors
-            }"
           />
         </mat-form-field>
         <div
-          *ngIf="submitted && ( !userForm.get('name').dirty || !userForm.get('name').touched ) "
+          *ngIf="submitted && userForm.get('name').errors"
           class="text-danger"
         >
           <span> Name is <strong>required</strong></span>
-      </div>
+        </div>
       </div>
       <div>
         <mat-form-field class="example-full-width">
           <input
+            matInput
             type="text"
             matInput
             formControlName="surename"
@@ -60,40 +66,42 @@
           />
         </mat-form-field>
         <div
-          *ngIf="submitted && (userForm.get('surename').errors)"
+          *ngIf="submitted && userForm.get('surename').errors"
           class="text-danger"
         >
-          <div *ngIf="userForm.get('surename').errors"> Surename is <strong>required</strong></div>
+          <span> Surename is <strong>required</strong> </span>
         </div>
       </div>
       <div>
         <mat-form-field class="example-full-width">
           <input
+            matInput
             type="number"
             matInput
             formControlName="age"
             placeholder="Age"
-            maxlength="3"
-            minlength="2"
+            max="29"
+            min="9"
             required
           />
         </mat-form-field>
-        <div
-          *ngIf="submitted && !userForm.get('age').touched && !userForm.get('age').dirty"
-          class="text-danger"
-        >
-          <div> age is <strong>required</strong></div>
-        </div>
-        <div
-          *ngIf="submitted && userForm.get('age').hasError('minlength') && userForm.get('age').hasError('maxlength')"
-          class="text-danger"
-        >
-          <div> age is <strong>length not allow</strong></div>
+        <div *ngIf="submitted" class="text-danger">
+          <span *ngIf="(userForm.get('age').errors)"
+            >age is <strong>required</strong></span
+          >
+          <!-- <span
+            *ngIf="
+              (userForm.get('age').value.length > 3) ||
+              (userForm.get('age').value.length < 2)
+            "
+            >age <strong>length not allow</strong></span
+          > -->
         </div>
       </div>
       <div>
         <mat-form-field class="example-full-width">
           <input
+            matInput
             type="text"
             matInput
             formControlName="bezeichnung"
@@ -105,11 +113,11 @@
           *ngIf="submitted && userForm.get('bezeichnung').errors"
           class="text-danger"
         >
-          <div *ngIf="userForm.get('bezeichnung').errors"> Bezeichnung is <strong>required</strong></div>
+          <span> Bezeichnung is <strong>required</strong> </span>
         </div>
       </div>
       <div>
-        <button mat-raised-button color="primary" type="submit" >
+        <button mat-raised-button color="primary" type="submit">
           Create User
         </button>
       </div>
@@ -131,10 +139,6 @@
         </mat-card-subtitle>
       </mat-card-header>
 
-      <!-- <mat-divider
-        style="margin-top: 1px; margin-bottom: 1px; margin-left: auto; margin-right: auto; width: 320px"
-      ></mat-divider> -->
-
       <mat-card-content
         ><p>{{ user.bezeichnung }}</p>
         <p>
@@ -148,7 +152,7 @@
         <button mat-raised-button color="primary" [routerLink]="['/edit-user']">
           EDIT
         </button>
-        <button mat-raised-button color="warn" (click)="delete(user.id)">
+        <button mat-raised-button color="warn" (click)="openDialog(user.id)">
           DELETE
         </button>
       </mat-card-actions>
@@ -156,7 +160,7 @@
   </div>
 </div>
 
-<mat-divider style="margin-top: 20px; margin-bottom: 20px"></mat-divider>
+<!-- <mat-divider style="margin-top: 20px; margin-bottom: 20px"></mat-divider> -->
 
 <!-- <mat-card class="example-card" *ngFor="let user of users">
   <mat-card-header
@@ -177,6 +181,3 @@
     <button mat-raised-button color="warn" (click)='delete(user.id)'>DELETE</button>
   </mat-card-actions>
 </mat-card> -->
-
-
-

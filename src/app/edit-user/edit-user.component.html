@@ -1,4 +1,4 @@
-<!-- <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
   <div class="form-container">
     <mat-form-field class="example-full-width">
       <input
@@ -8,14 +8,15 @@
         placeholder="Name"
         required
       />
-      <div *ngIf="name.dirty || name.touched">
-        <mat-error *ngIf="name.hasError('required')">
-              Email is <strong>required</strong>
-          </mat-error>
-      </div>
     </mat-form-field>
-    <br />
-
+    <div *ngIf="submitted">
+      <span *ngIf="editForm.get('name').errors">
+        Name is <strong>required</strong>
+      </span>
+    </div>
+  </div>
+  <br />
+  <div class="form-container">
     <mat-form-field class="example-full-width">
       <input
         type="text"
@@ -23,19 +24,41 @@
         formControlName="surename"
         placeholder="Surename"
         required
-      /> </mat-form-field
-    ><br />
-
+      />
+    </mat-form-field>
+    <div *ngIf="submitted">
+      <span *ngIf="editForm.get('name').errors">
+        Name is <strong>required</strong>
+      </span>
+    </div>
+  </div>
+  <br />
+  <div class="form-container">
     <mat-form-field class="example-full-width">
       <input
         type="number"
         matInput
         formControlName="age"
         placeholder="Age"
+        minlength="3"
+        maxlength="5"
         required
-      /> </mat-form-field
-    ><br />
-
+      />
+    </mat-form-field>
+    <div *ngIf="submitted" class="text-danger">
+      <span *ngIf="!editForm.get('age').dirty"
+        >age is <strong>required</strong></span
+      >
+      <!-- <span *ngIf="!editForm.get('age').dirty && editForm.get('age').hasError('minlength')"
+        >age <strong>too short</strong></span
+      > -->
+      <!-- <span *ngIf="!editForm.get('age').hasError('maxlength')"
+        >age <strong>too long</strong></span
+      > -->
+    </div>
+  </div>
+  <br />
+  <div class="form-container">
     <mat-form-field class="example-full-width">
       <input
         type="text"
@@ -43,70 +66,18 @@
         formControlName="bezeichnung"
         placeholder="Bezeichnung"
         required
-      /> </mat-form-field
-    ><br />
-
+      />
+    </mat-form-field>
+    <div *ngIf="submitted">
+      <span *ngIf="editForm.get('bezeichnung').errors">
+        Name is <strong>required</strong>
+      </span>
+    </div>
+  </div>
+  <br />
+  <div class="form-container" style="margin-left: 200px">
     <button mat-raised-button type="submit" color="primary">save</button>
   </div>
-</form> -->
-
-<div class="form">
-  <form [formGroup]="editForm" (keyup.enter)="onSubmit()">
-    <mat-form-field class="full-width" appearance="outline">
-      <!-- <mat-label>{{ 'authentication.username' | translate }}</mat-label> -->
-      <input
-        required
-        matInput
-        #name
-        type="text"
-        formControlName="name"
-        placeholder="Name"
-        (keydown.enter)="onSubmit()"
-      />
-      <mat-error *ngIf="name.touched && name.errors">
-        validation.required
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="full-width" appearance="outline">
-      <!-- <mat-label>{{ 'authentication.password' | translate }}</mat-label> -->
-      <input
-        required
-        matInput
-        #surename
-        type="text"
-        formControlName="surename"
-        placeholder="Surename"
-        (keydown.enter)="onSubmit()"
-      /><mat-error *ngIf="surename.touched && surename.errors">
-        validation.required
-      </mat-error>
-    </mat-form-field>
-
-    <div class="form-group">
-      <button
-        class="full-width"
-        type="submit"
-        (click)="onSubmit()"
-        mat-stroked-button
-        color="primary"
-      >
-        EDIT
-      </button>
-    </div>
-  </form>
-</div>
-
-<!-- <form class="example-form">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Email" [formControl]="emailFormControl">
-    <mat-error *ngIf="emailFormControl.hasError('name') && !nomlFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Name is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-</form> -->
+</form>
 
 
