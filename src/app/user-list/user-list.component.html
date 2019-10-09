@@ -1,30 +1,4 @@
 <div class="myContent" fxLayout="row" fxLayout="row wrap" fxLayout.xs="row">
-  <!-- <table id="customers">
-    <caption>
-      <h1>Products</h1>
-    </caption>
-    <thead>
-      <th><h2>Id</h2></th>
-      <th><h2>Name</h2></th>
-      <th><h2>Surename</h2></th>
-      <th><h2>Age</h2></th>
-      <th><h2>Bezeichnung</h2></th>
-      <th><h2></h2></th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <th>
-          <h2>{{ user.id }}</h2>
-        </th>
-        <td>{{ user.name }}</td>
-        <td>{{ user.surename }}</td>
-        <td>{{ user.age }}</td>
-        <td>{{ user.bezeichnung }}</td>
-        <td><button (click)="delete(user.id)">Delete User</button></td>
-      </tr>
-    </tbody>
-  </table> -->
-
   <mat-divider style="margin-top: 20px; margin-bottom: 20px"></mat-divider>
 
   <form
@@ -41,14 +15,14 @@
           <input
             matInput
             type="text"
-            matInput
+            #name
             formControlName="name"
             placeholder="name"
             required
           />
         </mat-form-field>
         <div
-          *ngIf="submitted && userForm.get('name').errors"
+          *ngIf="submitted==true && userForm.get('name').errors"
           class="text-danger"
         >
           <span> Name is <strong>required</strong></span>
@@ -60,13 +34,14 @@
             matInput
             type="text"
             matInput
+            #surename
             formControlName="surename"
             placeholder="Surename"
             required
           />
         </mat-form-field>
         <div
-          *ngIf="submitted && userForm.get('surename').errors"
+          *ngIf="submitted==true && userForm.get('surename').errors"
           class="text-danger"
         >
           <span> Surename is <strong>required</strong> </span>
@@ -78,6 +53,7 @@
             matInput
             type="number"
             matInput
+            #age
             formControlName="age"
             placeholder="Age"
             max="29"
@@ -85,8 +61,8 @@
             required
           />
         </mat-form-field>
-        <div *ngIf="submitted" class="text-danger">
-          <span *ngIf="(userForm.get('age').errors)"
+        <div *ngIf="submitted==true" class="text-danger">
+          <span *ngIf="userForm.get('age').errors"
             >age is <strong>required</strong></span
           >
           <!-- <span
@@ -104,13 +80,14 @@
             matInput
             type="text"
             matInput
+            #bezeichnung
             formControlName="bezeichnung"
             placeholder="what are you ?"
             required
           />
         </mat-form-field>
         <div
-          *ngIf="submitted && userForm.get('bezeichnung').errors"
+          *ngIf="submitted==true && userForm.get('bezeichnung').errors"
           class="text-danger"
         >
           <span> Bezeichnung is <strong>required</strong> </span>
@@ -149,7 +126,13 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-raised-button color="primary" [routerLink]="['/edit-user']">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="
+            editUser(user)
+          "
+        >
           EDIT
         </button>
         <button mat-raised-button color="warn" (click)="openDialog(user.id)">
